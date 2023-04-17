@@ -180,7 +180,7 @@ class GoogleDriveHelper:
         try:
             files = self.__get_files_in_folder(folder_id)
             for file in files:
-            self.__service.files().delete(fileId=file['id'], supportsAllDrives=True).execute()
+                self.__service.files().delete(fileId=file['id'], supportsAllDrives=True).execute()
             return "Successfully deleted all files in folder"
         except HttpError as err:
             if "File not found" in str(err) or "insufficientFilePermissions" in str(err):
