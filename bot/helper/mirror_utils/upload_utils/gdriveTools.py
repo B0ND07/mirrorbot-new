@@ -187,9 +187,9 @@ class GoogleDriveHelper:
                 self.__alt_auth = True
                 token_service = self.__authorize()
                 if token_service is not None:
-                LOGGER.error('Folder not found. Trying with token.pickle...')
-                self.__service = token_service
-                return self.delete_folder(link)
+                    LOGGER.error('Folder not found. Trying with token.pickle...')
+                    self.__service = token_service
+                    return self.delete_folder(link)
             LOGGER.error(f"Delete Result: {err}")
             return err
 
