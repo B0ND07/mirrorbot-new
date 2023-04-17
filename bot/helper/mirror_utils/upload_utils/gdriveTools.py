@@ -171,27 +171,15 @@ class GoogleDriveHelper:
             return msg
 
     
-    def delete_all_files_in_folder(self, link: str):
-        try:
-            folder_id = self.__getIdFromUrl(link)
-        except (KeyError, IndexError):
-            return "Google Drive ID could not be found in the provided link"
-    
-        try:
+    def delete_all_files_in_folder(self, folder_link: str) -> str:
+        folder_id = get_folder_id(folder_link)
+        if folder_id:
             files = self.__get_files_in_folder(folder_id)
             for file in files:
-                self.__service.files().delete(fileId=file['id'], supportsAllDrives=True).execute()
+                await self.__service.files().delete(fileId=file['id'], supportsAllDrives=True).execute()
             return "Successfully deleted all files in folder"
-        except HttpError as err:
-            if "File not found" in str(err) or "insufficientFilePermissions" in str(err):
-                self.__alt_auth = True
-                token_service = self.__authorize()
-                if token_service is not None:
-                    LOGGER.error('Folder not found. Trying with token.pickle...')
-                    self.__service = token_service
-                    return self.delete_folder(link)
-            LOGGER.error(f"Delete Result: {err}")
-            return err
+        else:
+            return "Invalid folder link provided"
 
     def upload(self, file_name, size):
         self.__is_uploading = True
