@@ -171,7 +171,7 @@ class GoogleDriveHelper:
             return msg
 
     
-    def delete_folder(self, link: str):
+    def delete_all_files_in_folder(self, link: str):
         try:
             folder_id = self.__getIdFromUrl(link)
         except (KeyError, IndexError):
