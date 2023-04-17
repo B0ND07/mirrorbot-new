@@ -171,7 +171,7 @@ class GoogleDriveHelper:
             return msg
 
     
-    def delete_all_files_in_folder(self, folder_link: str) -> str:
+    async def delete_all_files_in_folder(self, folder_link: str) -> str:
         folder_id = get_folder_id(folder_link)
         if folder_id:
             files = self.__get_files_in_folder(folder_id)
