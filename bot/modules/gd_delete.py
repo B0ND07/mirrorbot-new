@@ -28,6 +28,26 @@ async def deletefile(client, message):
     reply_message = await sendMessage(message, msg)
     await auto_delete_message(message, reply_message)
 
+async def deletefolder(client, message):
+    args = message.text.split()
+    if len(args) > 1:
+        link = args[1]
+    elif reply_to := message.reply_to_message:
+        link = reply_to.text.split(maxsplit=1)[0].strip()
+    else:
+        link = ''
+    if is_gdrive_link(link):
+        LOGGER.info(link)
+        drive = GoogleDriveHelper()
+        folder_id = extract_file_id(link)
+        msg = await sync_to_async(drive.delete_folder, folder_id)
+    else:
+        msg = 'Send Gdrive folder link along with command or by replying to the link by command'
+    reply_message = await sendMessage(message, msg)
+    await auto_delete_message(message, reply_message)
+
 
 bot.add_handler(MessageHandler(deletefile, filters=command(
     BotCommands.DeleteCommand) & CustomFilters.authorized))
+bot.add_handler(MessageHandler(delete_folder, filters=command(
+    BotCommands.DeletefoldersCommand) & CustomFilters.authorized))
