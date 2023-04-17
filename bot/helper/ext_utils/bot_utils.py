@@ -218,16 +218,10 @@ def is_url(url):
 
 
 def is_gdrive_link(link: str) -> bool:
-    """
-    Returns True if the provided link is a valid Google Drive link.
-    """
-    return link.startswith('https://drive.google.com/') and \
-        ('/file/d/' in link or '/view' in link)
+    return link.startswith('https://drive.google.com/') and \ ('/file/d/' in link or '/view' in link)
 
 
 def is_folder_link(link: str) -> bool:
-    # Google Drive folder link format:
-    # https://drive.google.com/drive/folders/<folder_id>
     return link.startswith("https://drive.google.com/drive/folders/")
 
 
