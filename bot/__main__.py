@@ -115,7 +115,6 @@ NOTE: Try each command without any argument to see more detalis.
 /{BotCommands.CloneCommand} [drive_url]: Copy file/folder to Google Drive.
 /{BotCommands.CountCommand} [drive_url]: Count file/folder of Google Drive.
 /{BotCommands.DeleteCommand} [drive_url]: Delete file/folder from Google Drive (Only Owner & Sudo).
-#/{BotCommands.DeletefoldersCommand} [drive_url]: Delete file/folder from Google Drive
 /{BotCommands.UserSetCommand} [query]: Users settings.
 /{BotCommands.BotSetCommand} [query]: Bot settings.
 /{BotCommands.BtSelectCommand}: Select files from torrents by gid or reply.
