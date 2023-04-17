@@ -19,10 +19,6 @@ async def deletefile(client, message):
     elif message.reply_to_message and message.reply_to_message.text:
         link = message.reply_to_message.text.split(maxsplit=1)[0].strip()
 
-    if not link or not is_gdrive_link(link):
-        await sendMessage(message, 'Please send a valid GDrive link along with the command or reply to a message containing the link.')
-        return
-
     drive = GoogleDriveHelper()
 
     if is_folder_link(link):
