@@ -13,18 +13,22 @@ from bot.helper.ext_utils.bot_utils import is_gdrive_link, is_folder_link, sync_
 @new_task
 async def deletefile(client, message):
     args = message.text.split()
-    link = ''
     if len(args) > 1:
         link = args[1]
-    elif message.reply_to_message and message.reply_to_message.text:
-        link = message.reply_to_message.text.split(maxsplit=1)[0].strip()
-
-    drive = GoogleDriveHelper()
-
-    if is_folder_link(link):
-        msg = await sync_to_async(drive.delete_all_files_in_folder)(link)
+    elif reply_to := message.reply_to_message:
+        link = reply_to.text.split(maxsplit=1)[0].strip()
     else:
-        msg = await sync_to_async(drive.deletefile)(link)
+        link = ''
+    if is_gdrive_link(link):
+        LOGGER.info(link)
+        drive = GoogleDriveHelper()
+        if is_folder_link(link):
+            msg = await asyncio.create_task(drive.delete_all_files_in_folder(link))
+        else:
+            msg = await asyncio.create_task(drive.deletefile(link))
+    else:
+        msg = 'Send Gdrive link along with command or by replying to the link by command'
+
 
     await sendMessage(message, msg)
     reply_message = await sendMessage(message, msg)
