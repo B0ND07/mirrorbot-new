@@ -222,8 +222,8 @@ def is_gdrive_link(link: str) -> bool:
         ('/file/d/' in link or '/view' in link)
 
 def is_folder_link(link: str) -> bool:
-    return link.startswith("https://drive.google.com/drive/folders/")
-
+    return link.startswith('https://drive.google.com/') and \
+        ('/folders/' in link or '/drive/folders/' in link)
 
 
 def is_share_link(url):
